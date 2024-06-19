@@ -132,7 +132,7 @@ function Form() {
                         <div key={`card_${index}`} className="card">
 
                             <figure>
-                                <img src="" alt="" />
+                                <img src={blog.image} alt="" />
                             </figure>
 
                             <div className="text">
