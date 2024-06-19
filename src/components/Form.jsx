@@ -5,9 +5,15 @@ import { BsTrash } from "react-icons/bs";
 function Form() {
     const dataDefault = {
         title: '',
+        image:'',
         description: '',
-        category:''
+        category: '',
+        publish: false,
+        tags:[],
     } 
+
+    const categories = ['cibo', 'web', 'videogames', 'informatica']
+    const allTags = ['html', 'css', 'js', 'php']
 
     const [blogs, setBlogs] = useState([]);
     const [blogData, setBlogData] = useState(dataDefault);
@@ -28,13 +34,18 @@ function Form() {
         setBlogData(data => ({...data, [key]: newData}))
     }
 
+    const addTags = (tag) => {
+        const currentTag = blogData.tags;
+        const newTags = currentTag.includes(tag) ? currentTag.filter(element => element !== tag) : [...currentTag, tag];
+        addData('tags', newTags)
+    }
     return (
         <div className="form">
             <h1>Form</h1>
             <form onSubmit={handleTitle}>
 
                 <div>
-                    <label for="title">Titolo</label>
+                    <label htmlFor="title">Titolo</label>
                     <input
                         id="title"
                         type="text"
@@ -44,7 +55,17 @@ function Form() {
                 </div>
 
                 <div className="margin">
-                    <label for="description">Descrizione</label>
+                    <label htmlFor="image">Url Immagine</label>
+                    <input
+                        id="image"
+                        type="text"
+                        value={blogData.image}
+                        onChange={event => addData('image', event.target.value)}
+                    />
+                </div>
+
+                <div>
+                    <label htmlFor="description">Descrizione</label>
                     <textarea
                         id="description"
                         value={blogData.description}
@@ -52,21 +73,50 @@ function Form() {
                     ></textarea>
                 </div>
 
-                <div>
-                <label for="category">Scegli la categoria</label>
+                <div className="margin">
+                <label htmlFor="category">Scegli la categoria</label>
                     <select
                         id="category"
                         value={blogData.category}
                         onChange={event => addData('category', event.target.value)}
                     >
                         <option selected>Categoria</option>
-                        <option value="cibo">Cibo</option>
-                        <option value="film">Film</option>
-                        <option value="videogame">Videogame</option>
+                        {
+                            categories.map((category, index) => (
+                                <option
+                                    key={`category_${index}`}
+                                    value={category}
+                                >
+                                    {category}
+                                </option>
+                            ))
+                        }
                     </select>
                 </div>
 
-                <button className="margin">Invia</button>
+                <div>
+                    {
+                        allTags.map((tag, index) => (
+                            <div key={`tag_${index}`} class="check">
+                                <input
+                                    id="tags"
+                                    type="checkbox"
+                                    checked={blogData.tags.includes(tag)}
+                                    onChange={() => addTags(tag)}
+                                />
+                                <label htmlFor="tags">
+                                  {tag}
+                                </label>
+                            </div>
+                        ))
+                    }
+                </div>
+
+                <div className="margin">
+                    <label htmlFor="publish">Pubblicare</label>
+                </div>
+
+                <button>Invia</button>
             </form>
             <div className="card-container">
                 {
@@ -90,6 +140,12 @@ function Form() {
 
                             <div className="category">
                                 <span>{blog.category}</span>
+                                </div>
+                                
+                                <div className="tags">
+                                    {
+                                        blog.tags.map(tag => <span>{tag}</span>)
+                                    }
                             </div>
 
                             </div>
