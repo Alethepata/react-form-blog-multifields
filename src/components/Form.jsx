@@ -94,10 +94,10 @@ function Form() {
                     </select>
                 </div>
 
-                <div>
+                <div className="check">
                     {
                         allTags.map((tag, index) => (
-                            <div key={`tag_${index}`} className="check">
+                            <div key={`tag_${index}`}>
                                 <input
                                     id="tags"
                                     type="checkbox"
