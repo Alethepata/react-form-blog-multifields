@@ -97,7 +97,7 @@ function Form() {
                 <div>
                     {
                         allTags.map((tag, index) => (
-                            <div key={`tag_${index}`} class="check">
+                            <div key={`tag_${index}`} className="check">
                                 <input
                                     id="tags"
                                     type="checkbox"
@@ -113,7 +113,15 @@ function Form() {
                 </div>
 
                 <div className="margin">
-                    <label htmlFor="publish">Pubblicare</label>
+                    <input
+                        id="publish"
+                        type="checkbox"
+                        checked={blogData.publish}
+                        onChange={(event) => addData('publish', Boolean(event.target.checked))}
+                    />
+                    <label htmlFor="publish">
+                      Pubblica
+                    </label>
                 </div>
 
                 <button>Invia</button>
@@ -130,7 +138,11 @@ function Form() {
                             <div className="text">
                                 
                             <div className="title">
-                                <h3>{blog.title}</h3>
+                                    <h3>{blog.title}</h3>
+                                    {
+                                        blog.publish === true ||
+                                        <span>Bozza</span>
+                                    }
                                 <button onClick={() => deleteTitle(index)}><BsTrash /></button>
                             </div>
 
@@ -140,12 +152,12 @@ function Form() {
 
                             <div className="category">
                                 <span>{blog.category}</span>
-                                </div>
+                            </div>
                                 
-                                <div className="tags">
-                                    {
-                                        blog.tags.map(tag => <span>{tag}</span>)
-                                    }
+                            <div className="tags">
+                                {
+                                    blog.tags.map(tag => <span>{tag}</span>)
+                                }
                             </div>
 
                             </div>
